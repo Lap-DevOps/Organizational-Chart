@@ -29,6 +29,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r api/requirements-dev.txt
 
+      - name: Create data directory
+        run: mkdir -p ./db/data
+        working-directory: ${{ github.workspace }}
+
+      - name: Set permissions for data directory
+        run: chmod -R 777 ./db/data
+        working-directory: ${{ github.workspace }}
+
       - name: Build and run Docker containers
         run: |
           docker-compose up --build -d
