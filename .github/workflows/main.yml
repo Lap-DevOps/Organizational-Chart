@@ -44,7 +44,7 @@ jobs:
 
       - name: Print permissions and owner
         run: |
-          sodo chmod -R 777 ./db/data
+          sudo chmod -R 777 ./db/data
           ls -la ./db/data
         working-directory: ${{ github.workspace }}
 
