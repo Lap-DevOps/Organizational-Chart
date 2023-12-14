@@ -52,6 +52,7 @@ jobs:
         run: |
           sudo chmod -R 777 ./db/data
           pytest
+        working-directory: ${{ github.workspace }}
 
       - name: Stop Docker containers
         run: |
