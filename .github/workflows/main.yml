@@ -50,6 +50,7 @@ jobs:
 
       - name: Run tests
         run: |
+          sudo chmod -R 777 ./db/data
           pytest
 
       - name: Stop Docker containers
