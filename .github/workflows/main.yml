@@ -34,7 +34,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Set permissions for data directory
-        run: chmod -R 777 ./db/data
+        run: sudo chmod -R 777 ./db/data
         working-directory: ${{ github.workspace }}
 
       - name: Build and run Docker containers
