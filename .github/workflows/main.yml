@@ -42,6 +42,11 @@ jobs:
           docker-compose up --build -d
           docker ps
 
+      - name: Print permissions and owner
+        run: |
+          ls -la ./db/data
+        working-directory: ${{ github.workspace }}
+
       - name: Run tests
         run: |
           pytest
