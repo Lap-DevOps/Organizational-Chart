@@ -43,7 +43,8 @@ jobs:
           docker ps
 
       - name: Wait for PostgreSQL to start
-        run: sleep 20
+        run: sleep 30
+
 
       - name: Run tests
         run: |
