@@ -12,6 +12,8 @@ services:
       - postgres
     networks:
       - app-network
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT}
     healthcheck:
       test: [ "CMD-SHELL", "curl --silent --fail http://localhost:8000/health || exit 1" ]
       interval: 10s
@@ -26,7 +28,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+#      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=md5"
       POSTGRESQL_PGAUDIT_LOG: READ,WRITE
       POSTGRESQL_LOG_HOSTNAME: 'true'
     expose:
@@ -35,6 +37,7 @@ services:
       - app-network
     volumes:
       - ./db/data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}" ]
       interval: 10s
@@ -78,14 +81,6 @@ services:
 networks:
   app-network:
     driver: bridge
-
-
-
-
-
-
-
-
 
 
 
