@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from api.app.config import config
+from .config import config
 
 db = SQLAlchemy()
 migrate = Migrate(db)
@@ -17,7 +17,7 @@ def create_app() -> Flask:
     """
 
     app = Flask(__name__)
-    config_name = os.environ.get("ENVIRONMENT", "development2")
+    config_name = os.environ.get("ENVIRONMENT", "development")
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     print("API configuration:", app.config["ENV"])
