@@ -42,10 +42,13 @@ jobs:
           docker-compose up --build -d
           docker ps
 
+      - name: Wait for PostgreSQL to start
+        run: sleep 30
+
       - name: Run tests
         run: |
           sudo chmod -R 777 ./db/data
-          pytest -vv -s --host=postgres-db-master
+          pytest -vv -s 
           test_status=$?
           if [ $test_status -eq 0 ]; then
             echo "Tests passed!"
