@@ -42,6 +42,9 @@ jobs:
           docker-compose up --build -d
           docker ps
 
+      - name: Wait for PostgreSQL to start
+        run: sleep 20
+
       - name: Run tests
         run: |
           sudo chmod -R 777 ./db/data
