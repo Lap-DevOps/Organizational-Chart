@@ -3,7 +3,7 @@ import os
 import pytest
 from flask import Flask
 
-from api.app import create_app
+from api.app import create_app, db
 
 
 @pytest.fixture
@@ -13,7 +13,10 @@ def app(monkeypatch) -> Flask:
     app = create_app()
     with app.app_context():
         assert os.environ.get("ENVIRONMENT") == "testing"
+        db.create_all()
         yield app
+        db.session.remove()
+        db.drop_all()
 
 
 @pytest.fixture

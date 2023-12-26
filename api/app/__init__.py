@@ -6,9 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 from api.app.config import config
 
-
 db = SQLAlchemy()
 migrate = Migrate(db)
+
 
 def create_app() -> Flask:
     """
@@ -25,17 +25,13 @@ def create_app() -> Flask:
     db.init_app(app)
     migrate.init_app(app, db)
 
-
     @app.route("/")
     def index():
         return {"API": "Test API v.0.1 "}
 
     @app.route('/health', methods=['GET'])
     def health_check():
-        # Здесь вы можете добавить логику проверки здоровья вашего приложения
-        # Например, проверка подключения к базе данных и других зависимостей
         health_status = {'status': 'ok'}
         return jsonify(health_status)
-
 
     return app
