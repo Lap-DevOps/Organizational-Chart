@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from app.config import config
+from api.app.config import config
 
 db = SQLAlchemy()
 migrate = Migrate(db)
