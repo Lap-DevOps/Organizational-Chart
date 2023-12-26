@@ -46,7 +46,16 @@ jobs:
         run: |
           sudo chmod -R 777 ./db/data
           pytest -vv -s
+          test_status=$?
+          if [ $test_status -eq 0 ]; then
+            echo "Tests passed!"
+            echo "##[set-output name=status]success"
+          else
+            echo "Tests failed!"
+            echo "##[set-output name=status]failure"
+          fi
         working-directory: ${{ github.workspace }}
+
 
       - name: Stop Docker containers
         run: |
