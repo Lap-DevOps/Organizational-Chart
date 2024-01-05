@@ -61,7 +61,6 @@ jobs:
           fi
         working-directory: ${{ github.workspace }}
 
-
       - name: Stop Docker containers
         run: |
           docker-compose down
