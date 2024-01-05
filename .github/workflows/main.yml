@@ -6,8 +6,7 @@ on:
       - main
 
 jobs:
-  test:
-    id: my-custom-test
+  my-custom-test:
     runs-on: ubuntu-latest
 
     env:
