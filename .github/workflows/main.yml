@@ -54,6 +54,7 @@ jobs:
           if [ $test_status -eq 0 ]; then
             echo "Tests passed!"
             echo "status=success" >> $GITHUB_ENV
+            echo "::set-output name=status::success"
           else
             echo "Tests failed!"
             echo "status=failure" >> $GITHUB_ENV
