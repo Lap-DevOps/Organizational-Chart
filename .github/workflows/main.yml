@@ -53,10 +53,10 @@ jobs:
           test_status=$?
           if [ $test_status -eq 0 ]; then
             echo "Tests passed!"
-            echo "##[set-output name=status]success"
+            echo "status=success" >> $GITHUB_ENV
           else
             echo "Tests failed!"
-            echo "##[set-output name=status]failure"
+            echo "status=failure" >> $GITHUB_ENV
           fi
         working-directory: ${{ github.workspace }}
 
