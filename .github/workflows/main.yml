@@ -11,9 +11,9 @@ jobs:
 
     env:
       ENVIRONMENT: "testing"
-      POSTGRES_DB: test_db
+      POSTGRES_DB: test_database
       POSTGRES_USER: test_user
-      POSTGRES_PASSWORD: test_password
+      POSTGRES_PASSWORD: test_user_password
 
     steps:
       - name: Checkout code
