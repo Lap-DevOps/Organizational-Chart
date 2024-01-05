@@ -66,3 +66,10 @@ jobs:
       - name: Stop Docker containers
         run: |
           docker-compose down
+
+      - name: Save state
+        run: echo STATE="success"" >> $GITHUB_ENV
+
+      - name: Set output
+        run: echo "::set-output name=MY_OUTPUT::${{ env.MY_VARIABLE }}"
+
