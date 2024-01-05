@@ -13,10 +13,10 @@ def app(monkeypatch) -> Flask:
     app = create_app()
     with app.app_context():
         assert os.environ.get("ENVIRONMENT") == "testing"
-        # db.create_all()
+        db.create_all()
         yield app
-        # db.session.remove()
-        # db.drop_all()
+        db.session.remove()
+        db.drop_all()
 
 
 @pytest.fixture

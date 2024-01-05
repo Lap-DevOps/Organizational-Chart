@@ -2,6 +2,10 @@ FROM python:3.10-alpine
 
 RUN apk --no-cache add curl
 
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 WORKDIR /app
 COPY requirements.txt /app
 
