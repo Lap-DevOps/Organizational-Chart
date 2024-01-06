@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+    
 
 jobs:
   my-custom-test:
@@ -71,5 +72,5 @@ jobs:
         run: echo STATE="success"" >> $GITHUB_ENV
 
       - name: Set output
-        run: echo "::set-output name=MY_OUTPUT::${{ env.MY_VARIABLE }}"
+        run: echo "::set-output name=status::success"
 
