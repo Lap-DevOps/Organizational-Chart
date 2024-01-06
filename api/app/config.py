@@ -70,7 +70,6 @@ class ProductionConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-
 config = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
