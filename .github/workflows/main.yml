@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-    
+
 
 jobs:
   my-custom-test:
@@ -69,8 +69,10 @@ jobs:
           docker-compose down
 
       - name: Save state
-        run: echo STATE="success"" >> $GITHUB_ENV
+        run:
+          echo "STATE=success" >> $GITHUB_ENV
 
       - name: Set output
-        run: echo "::set-output name=status::success"
+        run:
+          echo "::set-output name=status::success"
 
