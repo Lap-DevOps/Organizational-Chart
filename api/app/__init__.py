@@ -27,7 +27,7 @@ def create_app() -> Flask:
 
     @app.route("/")
     def index():
-        return {"API": "Test API v.0.2 "}
+        return {"API": "Test API v.0.212 "}
 
     @app.route('/health', methods=['GET'])
     def health_check():
