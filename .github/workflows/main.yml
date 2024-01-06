@@ -5,8 +5,9 @@ on:
     branches:
       - main
 
+
 jobs:
-  test:
+  my-custom-test:
     runs-on: ubuntu-latest
 
     env:
@@ -54,6 +55,7 @@ jobs:
           if [ $test_status -eq 0 ]; then
             echo "Tests passed!"
             echo "status=success" >> $GITHUB_ENV
+            echo "::set-output name=status::success"
           else
             echo "Tests failed!"
             echo "status=failure" >> $GITHUB_ENV
@@ -65,3 +67,12 @@ jobs:
       - name: Stop Docker containers
         run: |
           docker-compose down
+
+      - name: Save state
+        run:
+          echo "STATE=success" >> $GITHUB_ENV
+
+      - name: Set output
+        run:
+          echo "::set-output name=status::success"
+
