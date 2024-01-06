@@ -29,4 +29,3 @@ def test_db_version(app):
         version = db.session.execute(query).first()[0]
         assert version is not None, "Database version should not be None"
         assert version.startswith("PostgreSQL 16")
-

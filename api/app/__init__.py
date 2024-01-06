@@ -13,14 +13,13 @@ migrate = Migrate(db)
 def create_app() -> Flask:
     """
     Creates an application instance to run API
-    :return: A Flask object
+    :Returns: A Flask object
     """
-
     app = Flask(__name__)
     config_name = os.environ.get("ENVIRONMENT", "development")
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
-    print("API configuration:", app.config["ENV"])
+    # print("API configuration:", app.config["ENV"])
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -29,9 +28,9 @@ def create_app() -> Flask:
     def index():
         return {"API": "Test API v.0.212 "}
 
-    @app.route('/health', methods=['GET'])
+    @app.route("/health", methods=["GET"])
     def health_check():
-        health_status = {'status': 'ok'}
+        health_status = {"status": "ok"}
         return jsonify(health_status)
 
     return app
