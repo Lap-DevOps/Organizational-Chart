@@ -1,0 +1,6 @@
+runner:
+  flake8:
+    cmd: 'flake8 -'
+    name: flake8
+    format: 'flake8'
+    level: 'error'
