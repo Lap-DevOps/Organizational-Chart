@@ -1,4 +1,4 @@
-name: reviewdog-black
+name: reviewdog-Black
 on: [pull_request]
 jobs:
   linter_name:
