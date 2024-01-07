@@ -33,5 +33,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run flake8 and reviewdog
         run: |
-          reviewdog -reporter=github-check -runners=flake8
-          flake8 . | reviewdog -f=pep8 -efm="%f:%l %m" -reporter=github-pr-check
+          flake8 . | reviewdog  -efm="%f:%l %m" -reporter=github-pr-check
