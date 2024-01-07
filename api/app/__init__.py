@@ -1,37 +1,15 @@
-import os
+"""
+API Application Package.
 
-from flask import Flask, jsonify
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
+This package contains core functionality for the API application, including the Flask
+application creation and database initialization.
 
-from .config import config
+Usage:
+from app import create_app, db
 
-db = SQLAlchemy()
-migrate = Migrate(db)
+app = create_app()
+db.create_all(app=app)
+"""
+from .app_factory import create_app, db
 
-
-def create_app() -> Flask:
-    """
-    Creates an application instance to run API
-    :return: A Flask object
-    """
-
-    app = Flask(__name__)
-    config_name = os.environ.get("ENVIRONMENT", "development")
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
-    print("API configuration:", app.config["ENV"])
-
-    db.init_app(app)
-    migrate.init_app(app, db)
-
-    @app.route("/")
-    def index():
-        return {"API": "Test API v.0.212 "}
-
-    @app.route('/health', methods=['GET'])
-    def health_check():
-        health_status = {'status': 'ok'}
-        return jsonify(health_status)
-
-    return app
+__all__ = ["create_app", "db"]
