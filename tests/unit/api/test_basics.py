@@ -1,8 +1,6 @@
 from flask import current_app
 from sqlalchemy.sql import text
 
-from api.app import db
-
 
 def test_app_exists(app):
     """
@@ -24,7 +22,7 @@ def test_config_testing(app):
     assert app.config["ENV"] == "testing"
 
 
-def test_app_settings(app):
+def test_app_settings(app, db):
     """
     Test specific settings of the Flask app.
 
@@ -37,7 +35,7 @@ def test_app_settings(app):
     assert current_app.config["TESTING"] is True
 
 
-def test_db_version(app):
+def test_db_version(app, db):
     """
     Test the database version retrieval.
 

@@ -71,13 +71,11 @@ class DevelopmentConfig(Config):
     Attributes:
         ENV (str): The environment mode set to 'development'.
         DEBUG (bool): Debug mode set to True.
-
         dev_database_user (str): The username for the development database.
         dev_database_password (str): The password for the development database.
         dev_database_host (str): The host address for the development database.
         dev_database_port (str): The port number for the development database.
         dev_database_name (str): The name of the development database.
-
         SQLALCHEMY_DATABASE_URI (str): The SQLAlchemy database URI for the development database.
         SQLALCHEMY_TRACK_MODIFICATIONS (bool): SQLAlchemy track modifications set to False.
         SQLALCHEMY_ECHO (bool): SQLAlchemy echo mode set to False.

@@ -5,7 +5,7 @@ This package contains core functionality for the API application, including the 
 application creation and database initialization.
 
 Usage:
-from api.app import create_app, db
+from app import create_app, db
 
 app = create_app()
 db.create_all(app=app)
