@@ -2,13 +2,10 @@
 import os
 
 from flask import Flask, jsonify
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
+
 
 from .config import config
-
-db = SQLAlchemy()
-migrate = Migrate(db)
+from .utils import register_extensions
 
 
 def create_app() -> Flask:
@@ -19,12 +16,13 @@ def create_app() -> Flask:
         Flask: A Flask object representing the API application.
     """
     app = Flask(__name__)
+
     config_name = os.environ.get("ENVIRONMENT", "development")
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     print("API configuration:", app.config["ENV"])
-    db.init_app(app)
-    migrate.init_app(app, db)
+
+    register_extensions(app)
 
     @app.route("/")
     def index():
