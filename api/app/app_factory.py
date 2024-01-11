@@ -1,7 +1,7 @@
 """Factory function to create the API application instance."""
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, current_app
 
 
 from .config import config

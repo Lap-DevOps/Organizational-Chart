@@ -19,6 +19,7 @@ def app(monkeypatch) -> Flask:
         Flask: An instance of the Flask app.
     """
     monkeypatch.setenv("ENVIRONMENT", "testing")
+    # monkeypatch.setenv("ENVIRONMENT", "development")
     app = create_app()
     assert os.environ.get("ENVIRONMENT") == "testing"
     return app
