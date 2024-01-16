@@ -2,7 +2,7 @@
 Module containing configuration settings for the API application.
 
 Attributes:
-    ...
+    config = (): Configuration settings for the API application.
 """
 import os
 from datetime import timedelta

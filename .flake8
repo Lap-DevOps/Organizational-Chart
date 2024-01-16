@@ -1,5 +1,5 @@
 [flake8]
 max-line-length = 120
+extend-ignore = Q000, WPS432, WPS305
 
-
-exclude = .git, __pycache__, build, dist, .eggs, .hg, .mypy_cache, .nox, .tox, .venv, _build, buck-out, nginx, redis, docker,client, tests
+exclude = .git, __pycache__, build, dist, .eggs, .hg, .mypy_cache, .nox, .tox, .venv, _build, buck-out, nginx, redis, docker,client, tests, migrations
