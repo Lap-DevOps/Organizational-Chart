@@ -1,7 +1,9 @@
+from flask import Flask
+
 from app.extensions import bcrypt, db
 
 
-def register_extensions(app):
+def register_extensions(app: "Flask") -> None:
     """Call the method 'init_app' to register the extensions in the flask.Flask
     object passed as parameter.
 
