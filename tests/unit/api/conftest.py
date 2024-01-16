@@ -53,7 +53,9 @@ def create_alembic_config(app) -> AlembicConfig:
     alembic_location = alembic_config.get_main_option("script_location")
     base_path = os.path.dirname(alembic_config_file)
     if not os.path.isabs(alembic_location):
-        alembic_config.set_main_option("script_location", os.path.join(base_path, alembic_location))
+        alembic_config.set_main_option(
+            "script_location", os.path.join(base_path, alembic_location)
+        )
     return alembic_config
 
 
