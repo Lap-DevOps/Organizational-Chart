@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import current_app
+from flask import Flask, current_app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 

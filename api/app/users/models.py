@@ -7,7 +7,7 @@ from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app import db, bcrypt
+from app import bcrypt, db
 from app.database import Base
 
 
