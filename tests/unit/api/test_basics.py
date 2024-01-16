@@ -1,46 +1,55 @@
+from flask import Flask
 from flask import current_app
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 
 
-def test_app_exists(app):
-    """
-    Test if the Flask app instance exists.
+def test_app_exists(app: Flask) -> None:
+    """Check if the Flask app instance exists.
 
     Args:
-        app (Flask): The Flask application instance.
+        app: The Flask application instance.
+
+    Raises:
+        AssertionError: If the `app` parameter is not an instance of the Flask class.
     """
-    assert current_app is not None
+    assert isinstance(app, Flask)
 
 
-def test_config_testing(app):
+def test_config_testing(app: Flask) -> None:
     """
     Test if the app configuration is set to 'testing'.
 
     Args:
         app (Flask): The Flask application instance.
     """
+    # Ensure that the app configuration is set to 'testing'
     assert app.config["ENV"] == "testing"
 
 
-def test_app_settings(app, db):
+def test_app_settings(app: Flask) -> None:
     """
     Test specific settings of the Flask app.
 
     Args:
-        app (Flask): The Flask application instance.
+        app: The Flask application instance.
     """
+    # Assert that the DEBUG and TESTING configurations of the app are set to True
     assert app.config["DEBUG"] is True
     assert app.config["TESTING"] is True
+
+    # Assert that the DEBUG and TESTING configurations of the current app are set to True
     assert current_app.config["DEBUG"] is True
     assert current_app.config["TESTING"] is True
 
 
-def test_db_version(app, db):
+def test_db_version(app: Flask, db: SQLAlchemy) -> None:
     """
     Test the database version retrieval.
 
     Args:
-        app (Flask): The Flask application instance.
+        app: The Flask application instance.
+        db: The SQLAlchemy database instance.
 
     Raises:
         AssertionError: If the retrieved database version is None or does not start with "PostgreSQL 16".

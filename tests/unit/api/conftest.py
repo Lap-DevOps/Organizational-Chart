@@ -1,7 +1,11 @@
 import os
+from pathlib import Path
 
 import pytest
+from alembic import command
+from alembic.config import Config as AlembicConfig
 from flask import Flask
+from flask.testing import FlaskClient
 from flask_sqlalchemy import SQLAlchemy
 
 from api.app import create_app
@@ -18,11 +22,39 @@ def app(monkeypatch) -> Flask:
     Returns:
         Flask: An instance of the Flask app.
     """
+    # Set the environment variable to "testing"
     monkeypatch.setenv("ENVIRONMENT", "testing")
-    # monkeypatch.setenv("ENVIRONMENT", "development")
+
+    # Create an instance of the Flask app
     app = create_app()
+
+    # Assert that the environment variable is set to "testing"
     assert os.environ.get("ENVIRONMENT") == "testing"
-    return app
+
+    # Enter the app context
+    with app.app_context():
+        yield app
+
+
+def create_alembic_config(app) -> AlembicConfig:
+    """
+    Create and configure an AlembicConfig object.
+
+    Args:
+        alembic_config_file (str): The path to the Alembic config file.
+
+    Returns:
+        AlembicConfig: The configured AlembicConfig object.
+    """
+    alembic_config_file = Path(__file__).resolve().parents[3] / "api" / "alembic.ini"
+    alembic_config = AlembicConfig(alembic_config_file)
+    db_url = app.config["SQLALCHEMY_DATABASE_URI"]
+    alembic_config.set_main_option("sqlalchemy.url", db_url)
+    alembic_location = alembic_config.get_main_option("script_location")
+    base_path = os.path.dirname(alembic_config_file)
+    if not os.path.isabs(alembic_location):
+        alembic_config.set_main_option("script_location", os.path.join(base_path, alembic_location))
+    return alembic_config
 
 
 @pytest.fixture
@@ -36,24 +68,51 @@ def db(app) -> SQLAlchemy:
     Yields:
         SQLAlchemy: The SQLAlchemy database instance.
     """
-    from api.app import db
+    db = app.extensions["sqlalchemy"]
+    # Create an AlembicConfig object
+    alembic_config = create_alembic_config(app)
+
+    # Run the migrations
+    with app.app_context():
+        command.upgrade(alembic_config, "head")
+
+    alembic_config = create_alembic_config(app)
 
     with app.app_context():
-        db.create_all()
-        yield db
-        db.session.remove()
-        db.drop_all()
+        command.upgrade(alembic_config, "head")
+    yield db
+
+    with app.app_context():
+        command.downgrade(alembic_config, "base")
 
 
-@pytest.fixture
-def client(app):
+def client(app: Flask) -> FlaskClient:
     """
     Fixture providing a test client for the Flask app.
 
     Args:
-        app (Flask): The Flask app instance.
+        app: The Flask app instance.
 
     Returns:
-        FlaskClient: A test client for making requests to the app.
+        A test client for making requests to the app.
     """
     return app.test_client()
+
+
+def app_ctx(app: Flask) -> None:
+    """
+    Fixture for creating an application context.
+
+    This fixture enters the application context using a `with` statement,
+    allowing the test function to execute within the application context.
+    It yields control back to the test function after entering the context.
+
+    Args:
+        app (Flask): The Flask application object.
+
+    Returns:
+        None
+    """
+
+    with app.app_context():
+        yield

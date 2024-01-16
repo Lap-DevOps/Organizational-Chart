@@ -1,23 +1,23 @@
-import enum
 import uuid
 from datetime import datetime
+from enum import Enum
+from typing import Literal
 
-from sqlalchemy import String, Integer, DateTime
+from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import Mapped, mapped_column
 
-from .. import bcrypt, db
-from ..database import Base
+from app import db, bcrypt
+from app.database import Base
 
 
-class Role(enum.Enum):
+class Role(Enum):
     """Enumeration for user roles."""
 
-    admin = "Admin"
-    HR = "HR"
-    employee = "Employee"
-    guest = "Guest"
+    admin: Literal["Admin"] = "Admin"
+    HR: Literal["HR"] = "HR"
+    employee: Literal["Employee"] = "Employee"
+    guest: Literal["Guest"] = "Guest"
 
 
 class User(Base):
@@ -45,20 +45,48 @@ class User(Base):
 
     @property
     def password(self):
-        """Unsuccessful attempt to access the password."""
+        """
+        Getter method for the password attribute.
+
+        Raises:
+            AttributeError: If an attempt is made to access the password attribute.
+
+        Returns:
+            None
+        """
         raise AttributeError("password is not a readable attribute")
 
     @password.setter
     def password(self, password):
-        """Setting the password hash."""
+        """
+        Setter method for the password attribute.
+
+        Parameters:
+        - password (str): The password to set.
+
+        Returns:
+        - None
+
+        Description:
+        This method sets the password hash by generating a password hash using `bcrypt`
+        and decoding it to UTF-8.
+        """
         self.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
 
     def verify_password(self, password):
-        """Verify the entered password."""
+        """
+        Verify the entered password.
+
+        Args:
+            password (str): The password to be verified.
+
+        Returns:
+            bool: True if the password matches the stored password hash, False otherwise.
+        """
         return bcrypt.check_password_hash(self.password_hash, password)
 
     def __repr__(self) -> str:
-        """String representation of the User object."""
+        """Return a string representation of the User object."""
         return f"<User(id={self.id!r}, name={self.username!r}, email={self.email!r})>"
 
 

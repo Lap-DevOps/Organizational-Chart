@@ -9,8 +9,6 @@ from app import create_app, db
 
 app = create_app()
 db.create_all(app=app)
-"""
+# """
 from .app_factory import create_app
-from .extensions import db, bcrypt
-
-__all__ = ["create_app", "db", "bcrypt"]
+from .extensions import bcrypt, db

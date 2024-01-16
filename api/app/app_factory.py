@@ -1,22 +1,22 @@
 """Factory function to create the API application instance."""
 import os
 
-from flask import Flask, jsonify, current_app
+from flask import Flask, jsonify
 
-
-from .config import config
-from .utils import register_extensions
+from app.config import config
+from app.utils import register_extensions
 
 
 def create_app() -> Flask:
     """
-    Create an application instance to run the API.
+    Create and configure an instance of the Flask application.
 
     Returns:
         Flask: A Flask object representing the API application.
     """
     app = Flask(__name__)
 
+    # Set the configuration based on the environment variable
     config_name = os.environ.get("ENVIRONMENT", "development")
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
