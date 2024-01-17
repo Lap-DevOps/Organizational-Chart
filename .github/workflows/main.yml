@@ -47,7 +47,8 @@ jobs:
         run: sleep 30
 
       - name: Set PYTHONPATH
-        run: export PYTHONPATH=$PYTHONPATH:/path/to/your/modules
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
+          echo "PYTHONPATH=$PYTHONPATH:$(pwd)"
 
       - name: Run tests
         run: |
