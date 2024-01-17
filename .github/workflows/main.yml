@@ -47,7 +47,7 @@ jobs:
         run: sleep 30
 
       - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/api" >> $GITHUB_ENV
 
       - name: Show current working directory
         run: |
