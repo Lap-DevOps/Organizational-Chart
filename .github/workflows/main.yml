@@ -52,6 +52,8 @@ jobs:
       - name: Show current working directory
         run: |
           echo "Current working directory: $(pwd)"
+      - name: Show contents of current working directory
+        run: ls -la
 
       - name: Run tests
         run: |
