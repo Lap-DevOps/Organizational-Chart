@@ -21,6 +21,6 @@ jobs:
         uses: reviewdog/action-flake8@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          config_file: .flake8
+          flake8_args: max-line-length = 120
           reporter: github-pr-review
           level: warning
