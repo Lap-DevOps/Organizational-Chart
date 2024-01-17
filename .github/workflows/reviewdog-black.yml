@@ -17,3 +17,4 @@ jobs:
           # GitHub Status Check won't become failure with a warning.
           level: failure
           config_file: .pyproject.toml
+          additional_args: --line-length = 120
