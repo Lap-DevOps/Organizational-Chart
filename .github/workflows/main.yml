@@ -46,6 +46,8 @@ jobs:
       - name: Wait for PostgreSQL to start
         run: sleep 30
 
+      - name: Set PYTHONPATH
+        run: export PYTHONPATH=$PYTHONPATH:/path/to/your/modules
 
       - name: Run tests
         run: |
