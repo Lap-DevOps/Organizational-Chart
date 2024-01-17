@@ -1,4 +1,4 @@
-name: Run Tests
+name: API pytests
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 
 jobs:
-  my-custom-test:
+  pytest:
     runs-on: ubuntu-latest
 
     env:
@@ -48,12 +48,6 @@ jobs:
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/api" >> $GITHUB_ENV
-
-      - name: Show current working directory
-        run: |
-          echo "Current working directory: $(pwd)"
-      - name: Show contents of current working directory
-        run: ls -la
 
       - name: Run tests
         run: |

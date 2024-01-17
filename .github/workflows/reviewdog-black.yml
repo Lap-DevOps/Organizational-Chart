@@ -1,8 +1,8 @@
-name: reviewdog-Black
-on: [pull_request]
+name: Black -> reviewdog
+on: [ pull_request ]
 jobs:
   linter_name:
-    name: runner / black formatter
+    name: black formatter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,3 +16,4 @@ jobs:
           # Change reporter level if you need.
           # GitHub Status Check won't become failure with a warning.
           level: failure
+          config_file: .pyproject.toml
