@@ -48,7 +48,10 @@ jobs:
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
-          echo "PYTHONPATH=$PYTHONPATH:$(pwd)"
+
+      - name: Show current working directory
+        run: |
+          echo "Current working directory: $(pwd)"
 
       - name: Run tests
         run: |
