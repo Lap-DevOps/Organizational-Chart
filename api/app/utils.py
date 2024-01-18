@@ -18,7 +18,7 @@ def register_extensions(app: Flask) -> None:
     :type app: flask.Flask
     :return: None
     """
-    from app.users.models import User  # noqa I001
+    from app.users.models import User  # noqa I001 isort:skip
 
     db.init_app(app)
     bcrypt.init_app(app)
