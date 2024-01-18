@@ -13,3 +13,6 @@ extend-exclude = '''
 [tool.isort]
 profile = 'black'
 line_length = 120
+known_local_folder = ["app"]
+honor_noqa = true
+
