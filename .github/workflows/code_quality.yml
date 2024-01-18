@@ -1,5 +1,6 @@
 name: "Python Code Quality and Lint"
 description: "Supports Pylint, pycodestyle, Flake8, black, mypy and isort"
+on: [ push, pull_request ]
 inputs:
   python-root-list:
     description: "A list of all paths to test"
