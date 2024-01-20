@@ -11,6 +11,7 @@ app = create_app()
 db.create_all(app=app)
 """
 # module: app
+# noqa
 from .app_factory import create_app
 from .database import Base
 from .extensions import bcrypt, db

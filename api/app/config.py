@@ -51,7 +51,7 @@ class Config(object):
     CORS_ORIGINS = ["http://localhost:5000", "http:127.0.0.1:5000", "http:0.0.0.0"]
 
     @staticmethod
-    def init_app(app: Flask) -> None:
+    def init_app(app) -> None:
         """
         Initialize the Flask application.
 
