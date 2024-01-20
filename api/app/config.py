@@ -8,6 +8,7 @@ import os
 from datetime import timedelta
 
 from dotenv import load_dotenv
+from flask import Flask
 
 current_file_directory = os.path.dirname(__file__)
 BASE_DIR = os.path.abspath(current_file_directory)
@@ -50,14 +51,14 @@ class Config(object):
     CORS_ORIGINS = ["http://localhost:5000", "http:127.0.0.1:5000", "http:0.0.0.0"]
 
     @staticmethod
-    def init_app(app):
+    def init_app(app: Flask) -> None:
         """
         Initialize the Flask application.
 
         Args:
             app (Flask): The Flask application instance.
         """
-        pass
+        pass  # noqa
 
 
 class DevelopmentConfig(Config):

@@ -11,14 +11,14 @@ from flask import Flask
 from app.extensions import bcrypt, db
 
 
-def register_extensions(app: Flask) -> None:
-    """Call the method 'init_app' to register the extensions in the flask.Flask object passed as parameter.
+def register_flask_extensions(app: Flask) -> None:
+    """Call the method 'init_app' to register the extensions in the Flask object passed as parameter.
 
-    :param app: The Flask app object.
-    :type app: flask.Flask
-    :return: None
+    Args:
+        app (Flask): The Flask app object.
+
+    Returns:
+     None
     """
-    from app.users.models import User  # noqa I001 isort:skip
-
     db.init_app(app)
     bcrypt.init_app(app)

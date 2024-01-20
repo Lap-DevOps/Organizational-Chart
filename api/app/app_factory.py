@@ -4,7 +4,7 @@ import os
 from flask import Flask, jsonify
 
 from app.config import config
-from app.utils import register_extensions
+from app.utils import register_flask_extensions
 
 
 def create_app() -> Flask:
@@ -22,7 +22,7 @@ def create_app() -> Flask:
     config[config_name].init_app(app)
     print("API configuration:", app.config["ENV"])
 
-    register_extensions(app)
+    register_flask_extensions(app)
 
     @app.route("/")
     def index():

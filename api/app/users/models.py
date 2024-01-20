@@ -1,3 +1,9 @@
+"""
+Module Description.
+
+This module defines the User model and related functionality for managing users in the database.
+"""
+
 import uuid
 from datetime import datetime
 from enum import Enum
@@ -7,15 +13,15 @@ from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app import bcrypt, db
 from app.database import Base
+from app.extensions import bcrypt
 
 
 class Role(Enum):
     """Enumeration for user roles."""
 
     admin: Literal["Admin"] = "Admin"
-    HR: Literal["HR"] = "HR"
+    hr: Literal["HR"] = "HR"
     employee: Literal["Employee"] = "Employee"
     guest: Literal["Guest"] = "Guest"
 
@@ -44,28 +50,22 @@ class User(Base):
     employee_id: Mapped[str] = mapped_column(Integer, nullable=True)
 
     @property
-    def password(self):
+    def password(self) -> None:
         """
         Getter method for the password attribute.
 
         Raises:
             AttributeError: If an attempt is made to access the password attribute.
-
-        Returns:
-            None
         """
         raise AttributeError("password is not a readable attribute")
 
     @password.setter
-    def password(self, password):
+    def password(self, password: str) -> None:
         """
         Setter method for the password attribute.
 
-        Parameters:
-        - password (str): The password to set.
-
-        Returns:
-        - None
+        Args:
+            password (str): The password to set.
 
         Description:
         This method sets the password hash by generating a password hash using `bcrypt`
@@ -73,7 +73,7 @@ class User(Base):
         """
         self.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
 
-    def verify_password(self, password):
+    def verify_password(self, password) -> bool:
         """
         Verify the entered password.
 
@@ -86,12 +86,9 @@ class User(Base):
         return bcrypt.check_password_hash(self.password_hash, password)
 
     def __repr__(self) -> str:
-        """Return a string representation of the User object."""
+        """Return a string representation of the User object.
+
+        Returns:
+            str: A string representation of the User object.
+        """
         return f"<User(id={self.id!r}, name={self.username!r}, email={self.email!r})>"
-
-
-class Worker(db.Model):
-    __tablename__ = "workers"
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(120), unique=True, nullable=True)
-    email = db.Column(db.String(120), unique=True, nullable=False, index=True)
