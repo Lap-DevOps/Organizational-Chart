@@ -19,7 +19,7 @@ class Base(DeclarativeBase):
     __abstract__ = True
     metadata = MetaData(
         naming_convention={
-            "all_column_names": lambda constraint, table: "_".join(
+            "all_column_names": lambda constraint, table: "_".join(  # noqa
                 [column.name for column in constraint.columns.values()],
             ),
             "ix": "ix__%(table_name)s__%(all_column_names)s",
