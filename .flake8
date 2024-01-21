@@ -1,5 +1,7 @@
 [flake8]
+verbose = True
 max-line-length = 120
+max-complexity = 20
+extend-ignore = Q000, WPS432, WPS305, WPS115, I100, WPS412
 
-
-exclude = .git, __pycache__, build, dist, .eggs, .hg, .mypy_cache, .nox, .tox, .venv, _build, buck-out, nginx, redis, docker,client, tests
+exclude = .git, __pycache__, build, dist, .eggs, .hg, .mypy_cache, .nox, .tox, .venv, _build, buck-out, nginx, redis, docker,client, tests, migrations

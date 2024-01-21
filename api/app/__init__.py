@@ -10,6 +10,10 @@ from app import create_app, db
 app = create_app()
 db.create_all(app=app)
 """
-from .app_factory import create_app, db
+# module: app
+# noqa
+from .app_factory import create_app
+from .database import Base
+from .extensions import bcrypt, db
 
-__all__ = ["create_app", "db"]
+__all__ = ["Base", "db", "bcrypt", "create_app"]

@@ -1,5 +1,5 @@
-name: pylint-reviewdog
-on: [pull_request]
+name: Pylint -> reviewdog
+on: [ pull_request ]
 jobs:
   pylint:
     name: runner / pylint
@@ -7,10 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dciborow/action-pylint@0.1.0
+        #      - uses: reviewdog/action-pylint@0.1.0
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
-          reporter: github-pr-review
+          reporter: github-pr-check
           # Change reporter level if you need.
           # GitHub Status Check won't become failure with warning.
           level: warning

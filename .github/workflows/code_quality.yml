@@ -1,0 +1,41 @@
+name: Python application
+
+on: [ push ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          python-version: 3.8
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8==6.1.0
+          if [ -f api/requirements-dev.txt ]; then pip install -r api/requirements-dev.txt; fi
+          # Install flake8 extensions (this step is not required. Default is "None").
+          pip install flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes
+      - name: Setup flake8 annotations
+        uses: rbialon/flake8-annotations@v1
+
+      - name: Lint with flake8
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install flake8
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics | reviewdog -f=flake8 --reporter=github-pr-review
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics |reviewdog -f=flake8 --reporter=github-pr-review

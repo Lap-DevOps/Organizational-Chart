@@ -2,7 +2,7 @@
 Module containing configuration settings for the API application.
 
 Attributes:
-    ...
+    config = (): Configuration settings for the API application.
 """
 import os
 from datetime import timedelta
@@ -41,12 +41,8 @@ class Config(object):
     """
 
     SECRET_KEY = os.getenv("SECRET_KEY", "my_precious_secret_key")
-    SECURITY_PASSWORD_SALT = (
-        os.environ.get("SECURITY_PASSWORD_SALT") or "hard to guess string"
-    )
-    SECURITY_PASSWORD_HASH = (
-        os.environ.get("SECURITY_PASSWORD_HASH") or "hard to guess string"
-    )
+    SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or "hard to guess string"
+    SECURITY_PASSWORD_HASH = os.environ.get("SECURITY_PASSWORD_HASH") or "hard to guess string"
     DEBUG = False
     JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY") or "hard to guess string"
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
@@ -54,14 +50,14 @@ class Config(object):
     CORS_ORIGINS = ["http://localhost:5000", "http:127.0.0.1:5000", "http:0.0.0.0"]
 
     @staticmethod
-    def init_app(app):
+    def init_app(app) -> None:  # noqa
         """
         Initialize the Flask application.
 
         Args:
             app (Flask): The Flask application instance.
         """
-        pass
+        pass  # noqa
 
 
 class DevelopmentConfig(Config):
@@ -98,7 +94,7 @@ class DevelopmentConfig(Config):
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_ECHO = True
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_size": 10,
         "echo": True,
@@ -145,7 +141,8 @@ class TestingConfig(Config):
     )
 
     PRESERVE_CONTEXT_ON_EXCEPTION = False
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_ECHO = True
 
 
 class ProductionConfig(Config):
