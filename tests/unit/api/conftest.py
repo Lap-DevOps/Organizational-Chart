@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Generator
 
 import pytest
 from alembic import command
@@ -99,7 +100,7 @@ def client(app: Flask) -> FlaskClient:
     return app.test_client()
 
 
-def app_ctx(app: Flask) -> None:
+def app_ctx(app: Flask) -> Generator:
     """
     Fixture for creating an application context.
 

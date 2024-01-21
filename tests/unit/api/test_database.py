@@ -38,7 +38,7 @@ def test_alembic_version_table_exists(db: SQLAlchemy) -> None:
             ), "Table 'alembic_version' not found in the public schema."
 
     except OperationalError as e:
-        raise OperationalError(f"Error executing SQL query: {e}")
+        raise OperationalError("Error executing SQL query", params=None, orig=e)
 
 
 def test_users_table_exists(db: SQLAlchemy) -> None:
@@ -60,7 +60,7 @@ def test_users_table_exists(db: SQLAlchemy) -> None:
                 raise AssertionError("Table 'users' not found in the public schema.")
 
     except OperationalError as e:
-        raise OperationalError(f"Error executing SQL query: {e}")
+        raise OperationalError("Error executing SQL query:", params=None, orig=e)
 
 
 def test_table_names_in_db_vs_app(app: Flask, db: SQLAlchemy) -> None:
@@ -97,7 +97,7 @@ def test_table_names_in_db_vs_app(app: Flask, db: SQLAlchemy) -> None:
         assert set(app_table_names + ["alembic_version"]) == set(db_table_names)
 
     except OperationalError as e:
-        raise OperationalError(f"Error executing SQL query: {e}")
+        raise OperationalError(f"Error executing SQL query:", params=None, orig=e)
 
 
 def test_content_users_table_db_vs_app(app: Flask, db: SQLAlchemy) -> None:
@@ -138,7 +138,7 @@ def test_content_users_table_db_vs_app(app: Flask, db: SQLAlchemy) -> None:
                 assert column_name in app_columns, f"Column '{column_name}' not found in the application model."
 
     except OperationalError as e:
-        raise OperationalError(f"Error executing SQL query: {e}")
+        raise OperationalError(f"Error executing SQL query:", params=None, orig=e)
 
 
 def test_table_in_db(app: Flask, db: SQLAlchemy) -> None:
@@ -161,4 +161,4 @@ def test_table_in_db(app: Flask, db: SQLAlchemy) -> None:
             assert result is True
 
     except OperationalError as e:
-        raise OperationalError(f"Error executing SQL query: {e}")
+        raise OperationalError(f"Error executing SQL query:", params=None, orig=e)

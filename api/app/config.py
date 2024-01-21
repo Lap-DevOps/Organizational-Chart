@@ -8,7 +8,6 @@ import os
 from datetime import timedelta
 
 from dotenv import load_dotenv
-from flask import Flask
 
 current_file_directory = os.path.dirname(__file__)
 BASE_DIR = os.path.abspath(current_file_directory)
