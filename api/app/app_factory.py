@@ -1,10 +1,10 @@
 """Factory function to create the API application instance."""
 import os
 
-from flask import Flask, jsonify
+from flask import Flask
 
 from app.config import config
-from app.utils import register_flask_extensions
+from app.utils import register_flask_extensions, register_api_namespace, register_flask_blueprints
 
 
 def create_app() -> Flask:
@@ -23,14 +23,7 @@ def create_app() -> Flask:
     print("API configuration:", app.config["ENV"])
 
     register_flask_extensions(app)
-
-    @app.route("/")
-    def index():
-        return {"API": "Test API v.0.212 "}
-
-    @app.route("/health", methods=["GET"])
-    def health_check():
-        health_status = {"status": "ok"}
-        return jsonify(health_status)
+    register_api_namespace(app)
+    register_flask_blueprints(app)
 
     return app
