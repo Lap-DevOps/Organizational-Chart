@@ -6,6 +6,8 @@ python-dotenv==1.0.0
 psycopg2-binary==2.9.9
 # psycopg2==2.9.9
 Flask-Bcrypt==1.0.1
+marshmallow==3.20.2
+
 
 
 
