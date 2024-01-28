@@ -21,7 +21,7 @@ class Role(Enum):
     """Enumeration for user roles."""
 
     admin: Literal["Admin"] = "Admin"
-    hr: Literal["HR"] = "HR"
+    HR: Literal["HR"] = "HR"
     employee: Literal["Employee"] = "Employee"
     guest: Literal["Guest"] = "Guest"
 
