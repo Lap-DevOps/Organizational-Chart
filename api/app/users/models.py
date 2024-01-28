@@ -9,7 +9,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Literal
 
-from sqlalchemy import DateTime, Integer, String
+from sqlalchemy import DateTime, Integer, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -37,7 +37,7 @@ class User(Base):
         unique=True,
         nullable=False,
         index=True,
-        default=lambda: str(uuid.uuid4()),
+        default=lambda: str(uuid.uuid4),
     )
 
     username: Mapped[str] = mapped_column(String(120), unique=True, nullable=True)
@@ -45,8 +45,8 @@ class User(Base):
     role: Mapped[Role] = mapped_column(nullable=False, default=Role.guest)
 
     password_hash: Mapped[str] = mapped_column(String(256))
-    member_since: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    last_login: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    member_since: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    last_update: Mapped[datetime] = mapped_column(DateTime, default=func.now(), onupdate=func.now())
     employee_id: Mapped[str] = mapped_column(Integer, nullable=True)
 
     @property
