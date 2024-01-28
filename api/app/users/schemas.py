@@ -39,4 +39,3 @@ class UserDto:
             "employee_id": fields.Integer(required=True, description="User employee id", example="1", default=0),
         },
     )
-
