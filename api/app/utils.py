@@ -36,7 +36,7 @@ def register_api_namespace(app: Flask) -> None:
     """
     from app.users.resources import user_namespace
 
-    api.add_namespace(user_namespace, path="/api/user")
+    api.add_namespace(user_namespace, path="/api/v1/user")
 
 
 def register_flask_blueprints(app: Flask) -> None:
