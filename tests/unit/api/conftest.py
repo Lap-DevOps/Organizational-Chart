@@ -87,6 +87,7 @@ def db(app) -> SQLAlchemy:
         command.downgrade(alembic_config, "base")
 
 
+@pytest.fixture
 def client(app: Flask) -> FlaskClient:
     """
     Fixture providing a test client for the Flask app.
