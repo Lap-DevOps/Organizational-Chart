@@ -1,6 +1,6 @@
 import pytest
 from flask.testing import FlaskClient
-from flask_restx import Namespace
+from flask_restx import Namespace, Model
 
 from app.users.models import Role
 from app.users.schemas import UserDto
@@ -297,3 +297,59 @@ def test_required_role_creation(client: FlaskClient) -> None:
     assert response.status_code == 400
     assert "'role' is a required property" in str(response.json["errors"])
     assert b"Input payload validation failed" in response.json["message"].encode()
+
+
+class Test_new_user_password_schema:
+    """
+    Function to test  of a new user password schema.
+    """
+
+    def test_new_user_password_schema_creation(self) -> None:
+        """
+        Function to test the creation of a new user password schema.
+        """
+        new_user_password_schema = UserDto.new_user_password_schema
+        assert new_user_password_schema
+        assert isinstance(new_user_password_schema, Model)
+        assert new_user_password_schema.name == "new_user_password_schema"
+
+    def test_new_user_password_schema_old_password(self) -> None:
+        """
+        Function to test the old password schema.
+        """
+        new_user_password_schema = UserDto.new_user_password_schema
+        assert new_user_password_schema["old_password"].required == True
+        assert new_user_password_schema["old_password"].min_length == 8
+        assert new_user_password_schema["old_password"].max_length == 30
+        assert new_user_password_schema["old_password"].description == "User password"
+        assert new_user_password_schema["old_password"].example == "password"
+
+    def test_new_user_password_schema_new_password(self) -> None:
+        """
+        Function to test the new password schema.
+        """
+        new_user_password_schema = UserDto.new_user_password_schema
+        assert new_user_password_schema["new_password"].required == True
+        assert new_user_password_schema["new_password"].min_length == 8
+        assert new_user_password_schema["new_password"].max_length == 30
+        assert new_user_password_schema["new_password"].description == "User password"
+        assert new_user_password_schema["new_password"].example == "new_password"
+        assert (
+            new_user_password_schema["new_password"].pattern
+            == r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        )
+
+    def test_new_user_password_schema_confirm_password(self) -> None:
+        """
+        Function to test the confirm password schema.
+        """
+        new_user_password_schema = UserDto.new_user_password_schema
+        assert new_user_password_schema["confirm_password"].required == True
+        assert new_user_password_schema["confirm_password"].min_length == 8
+        assert new_user_password_schema["confirm_password"].max_length == 30
+        assert new_user_password_schema["confirm_password"].description == "User password"
+        assert new_user_password_schema["confirm_password"].example == "new_password"
+        assert (
+            new_user_password_schema["confirm_password"].pattern
+            == r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        )
