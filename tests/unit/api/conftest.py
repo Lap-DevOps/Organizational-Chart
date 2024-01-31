@@ -58,7 +58,7 @@ def create_alembic_config(app) -> AlembicConfig:
     return alembic_config
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def db(app) -> SQLAlchemy:
     """
     Fixture providing a SQLAlchemy database instance.
@@ -87,7 +87,7 @@ def db(app) -> SQLAlchemy:
         command.downgrade(alembic_config, "base")
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def client(app: Flask) -> FlaskClient:
     """
     Fixture providing a test client for the Flask app.
@@ -101,6 +101,7 @@ def client(app: Flask) -> FlaskClient:
     return app.test_client()
 
 
+@pytest.fixture(scope="module")
 def app_ctx(app: Flask) -> Generator:
     """
     Fixture for creating an application context.

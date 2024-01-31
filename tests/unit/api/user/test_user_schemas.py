@@ -1,11 +1,26 @@
 import pytest
 from flask.testing import FlaskClient
+from flask_restx import Namespace
 
 from app.users.models import Role
 from app.users.schemas import UserDto
 
 
-def test_user_schema_username():
+def test_api_namespace_creation() -> None:
+    """
+    Test the creation of the API namespace.
+    """
+    api = UserDto.api
+    assert api.name == "user"
+    assert api.description == "User related operations"
+    assert api.path == "/user"
+    assert isinstance(api, Namespace)
+
+
+def test_user_schema_username() -> None:
+    """
+    Test the user schema for username field.
+    """
     model = UserDto.user_schema
     assert model["username"].required == True
     assert model["username"].min_length == 3
@@ -16,6 +31,9 @@ def test_user_schema_username():
 
 
 def test_user_schema_email():
+    """
+    Test the user schema for the username field.
+    """
     model = UserDto.user_schema
     assert model["email"].required == True
     assert model["email"].min_length == 6
@@ -27,6 +45,9 @@ def test_user_schema_email():
 
 
 def test_user_schema_role():
+    """
+    Test the user schema role by asserting various properties of the user role model.
+    """
     model = UserDto.user_schema
     assert model["role"].required == True
     assert model["role"].description == "User role"
@@ -36,6 +57,9 @@ def test_user_schema_role():
 
 
 def test_user_schema_employee_id():
+    """
+    Function to test the user schema for employee_id field.
+    """
     model = UserDto.user_schema
     assert model["employee_id"].required == True
     assert model["employee_id"].description == "User employee id"
@@ -217,4 +241,59 @@ def test_invalid_email_max_lenght(client: FlaskClient) -> None:
 
     assert response.status_code == 400
     assert "is too long" in str(response.json["errors"])
+    assert b"Input payload validation failed" in response.json["message"].encode()
+
+
+def test_invalid_role_creation(client: FlaskClient) -> None:
+    """
+    Test to check error handling during user schema creation with invalid role.
+    """
+    invalid_user_data = {
+        "username": "valid_username",
+        "email": "valid@email.com",
+        "role": "invalid_role",
+        "employee_id": 123,
+    }
+
+    response = client.post("/api/v1/user/", json=invalid_user_data)
+
+    assert response.status_code == 400
+    assert b"Input payload validation failed" in response.json["message"].encode()
+    assert "is not one of" in response.data.decode()
+
+
+@pytest.mark.parametrize(
+    "valid_role",
+    [("admin"), ("guest"), ("HR"), ("employee")],
+)
+def test_valid_role_creation(client: FlaskClient, valid_role: str) -> None:
+    """
+    Test to check error handling during user schema creation with valid role.
+    """
+    valid_user_data = {
+        "username": "valid_username",
+        "email": "valid@email.com",
+        "role": valid_role,
+        "employee_id": 123,
+    }
+
+    response = client.post("/api/v1/user/", json=valid_user_data)
+
+    assert response.status_code == 200
+
+
+def test_required_role_creation(client: FlaskClient) -> None:
+    """
+    Test to check that 'role' is required during user schema creation.
+    """
+    user_data = {
+        "username": "valid_username",
+        "email": "valid@email.com",
+        "employee_id": 123,
+    }
+
+    response = client.post("/api/v1/user/", json=user_data)
+
+    assert response.status_code == 400
+    assert "'role' is a required property" in str(response.json["errors"])
     assert b"Input payload validation failed" in response.json["message"].encode()
